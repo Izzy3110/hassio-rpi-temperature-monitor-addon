@@ -10,7 +10,7 @@ until false; do
   memFree=$(( $memRawFree / 1000 ))
   memTotal=$(( $memRawTotal / 1000 ))
 
-  memFreePercent=$(( $mem_free / $memTotal * 100 ))
+  memFreePercent=$(( $memFree / $memTotal * 100 ))
 
   #
   unit="C"
