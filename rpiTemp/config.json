@@ -1,6 +1,6 @@
 {
   "name": "RPi Temperature Monitor",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "slug": "rpitempmon",
   "description": "This is a addon for monitoring the temperature of the Raspberry Pi running HassIO",
   "arch": ["armhf", "armv7", "aarch64"],
