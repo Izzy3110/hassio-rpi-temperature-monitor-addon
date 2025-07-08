@@ -10,7 +10,7 @@ until false; do
   memFree=$(( $memRawFree / 1000 ))
   memTotal=$(( $memRawTotal / 1000 ))
 
-  memFreePercent=$(( $memFree / $memTotal * 100 ))
+  memFreePercent=$(( $memRawFree / $memRawTotal ))
 
   #
   unit="C"
@@ -26,6 +26,6 @@ until false; do
   echo "Current Mem Free        $memFree $memUnit"
   curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$cpuTemp'", "attributes":  {"unit_of_measurement": "°'$unit'", "icon": "mdi:temperature-celsius", "friendly_name": "CPU Temperature"}}' http://hassio/homeassistant/api/states/sensor.cpu_temperature 2>/dev/null
   curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$memFree'", "attributes":  {"unit_of_measurement": "'$memUnit'", "icon": "mdi:memory", "friendly_name": "Memory Free"}}' http://hassio/homeassistant/api/states/sensor.mem_free 2>/dev/null
-  curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$memFreePercent'", "attributes":  {"unit_of_measurement": "'$memUnitPercentage'", "icon": "mdi:memory", "friendly_name": "Memory Free Percentage"}}' http://hassio/homeassistant/api/states/sensor.mem_free_percentage 2>/dev/null
+  curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$memFreePercent'", "attributes":  {"unit_of_measurement": "'$memUnitPercentage'", "icon": "mdi:memory", "friendly_name": "Memory Free - Percentage"}}' http://hassio/homeassistant/api/states/sensor.mem_free_percentage 2>/dev/null
   sleep 30;
 done
