@@ -3,12 +3,20 @@ CorF=$(cat options.json |jq -r '.CorF')
 until false; do 
   read cpuRawTemp</sys/class/thermal/thermal_zone0/temp #read instead of cat fpr process reductionread cpuRawTemp</sys/class/thermal/thermal_zone0/temp #read instead of cat fpr process reduction
   cpuTemp=$(( $cpuRawTemp / 1000 ))
+  # 
+  memRawFree=$(cat /proc/meminfo | grep MemFree | awk '{ print $2 }')
+  memFree=$(( $memRawFree / 1000 ))
+  #
   unit="C"
+  memUnit="Mb"
+  #
   if [ $CorF == "F" ]; then
     cpuTemp=$(( ( $cpuTemp *  9/5 ) + 32 ));
     unit="F"
   fi
   echo "Current CPU Temperature $cpuTemp °$unit"
+  echo "Current Mem Free        $memFree $memUnit"
   curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$cpuTemp'", "attributes":  {"unit_of_measurement": "°'$unit'", "icon": "mdi:temperature-celsius", "friendly_name": "CPU Temperature"}}' http://hassio/homeassistant/api/states/sensor.cpu_temperature 2>/dev/null
+  curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$memFree'", "attributes":  {"unit_of_measurement": "°'$memUnit'", "icon": "mdi:memory", "friendly_name": "Memory Free"}}' http://hassio/homeassistant/api/states/sensor.mem_free 2>/dev/null
   sleep 30;
 done
