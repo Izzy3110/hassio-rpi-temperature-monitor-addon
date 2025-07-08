@@ -1,5 +1,5 @@
 {
   "name": "HassIO RaspberryPI Temperature Monitor",
-  "url": "https://github.com/Izzy3110/HassioRasperryPITemperatureSensor",
+  "url": "https://github.com/Izzy3110/hassio-rpi-temperature-monitor-addon",
   "maintainer": "Sascha Frank <sfrank@wyl-online.de>"
 }

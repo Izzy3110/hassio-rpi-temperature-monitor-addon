@@ -10,7 +10,7 @@
   "startup": "application",
   "boot": "auto",
   "auth_api": true,
-  "url": "https://community.home-assistant.io/t/new-addon-raspbery-pi-temp-sensor/260609",
+  "url": "https://wyl-online.de/hassio",
   "options": {
     "CorF": "C"
   },
