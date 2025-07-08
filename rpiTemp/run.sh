@@ -8,7 +8,7 @@ until false; do
     cpuTemp=$(( ( $cpuTemp *  9/5 ) + 32 ));
     unit="F"
   fi
-  echo "Current Temperature $cpuTemp °$unit"
-  curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$cpuTemp'", "attributes":  {"unit_of_measurement": "°'$unit'", "icon": "mdi:temperature-celsius", "friendly_name": "CPU Temp"}}' http://hassio/homeassistant/api/states/sensor.cpu_temp 2>/dev/null
+  echo "Current CPU Temperature $cpuTemp °$unit"
+  curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$cpuTemp'", "attributes":  {"unit_of_measurement": "°'$unit'", "icon": "mdi:temperature-celsius", "friendly_name": "CPU Temperature"}}' http://hassio/homeassistant/api/states/sensor.cpu_temperature 2>/dev/null
   sleep 30;
 done
