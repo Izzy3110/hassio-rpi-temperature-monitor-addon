@@ -1,5 +1,6 @@
 | Version | Change|
 | --- | --- |
+| **0.0.10** | added system uptime in the console only|
 | **0.0.9** | added system uptime|
 | **0.0.8** | using MemAvailable for memRawFree|
 | **0.0.7** | float calculation with awk|
