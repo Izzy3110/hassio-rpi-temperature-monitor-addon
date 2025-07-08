@@ -8,6 +8,17 @@ until false; do
   memRawFree=$(grep MemAvailable /proc/meminfo | awk '{ print $2 }')
   memRawTotal=$(cat /proc/meminfo | grep MemTotal | awk '{ print $2 }')
 
+  uptime_raw=$(awk '{print $1}' /proc/uptime)
+  uptime_sec=${uptime_raw%.*}
+  
+  days=$(( uptime_sec/60/60/24 ))
+  hours=$(( (uptime_sec/60/60)%24 ))
+  minutes=$(( (uptime_sec/60)%60 ))
+  seconds=$(( uptime_sec%60 ))
+  uptimeStr="${days}d ${hours}h ${minutes}m ${seconds}s"
+  
+
+
   memFree=$(( $memRawFree / 1000 ))
   memTotal=$(( $memRawTotal / 1000 ))
 
@@ -31,9 +42,11 @@ until false; do
   echo " - free                 $memRawFree Kb"
   echo " - total                $memRawTotal Kb"
   echo ""
+  echo "Uptime: ${days}d ${hours}h ${minutes}m ${seconds}s"
 
   curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$cpuTemp'", "attributes":  {"unit_of_measurement": "°'$unit'", "icon": "mdi:temperature-celsius", "friendly_name": "CPU Temperature"}}' http://hassio/homeassistant/api/states/sensor.cpu_temperature 2>/dev/null
   curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$memFree'", "attributes":  {"unit_of_measurement": "'$memUnit'", "icon": "mdi:memory", "friendly_name": "Memory Free"}}' http://hassio/homeassistant/api/states/sensor.mem_free 2>/dev/null
   curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$memFreePercent'", "attributes":  {"unit_of_measurement": "'$memUnitPercentage'", "icon": "mdi:memory", "friendly_name": "Memory Free - Percentage"}}' http://hassio/homeassistant/api/states/sensor.mem_free_percentage 2>/dev/null
+  curl -s -X POST -H "Content-Type: application/json"  -H "Authorization: Bearer $HASSIO_TOKEN" -d '{"state": "'$uptimeStr'", "attributes":  {"unit_of_measurement": "", "icon": "mdi:clock", "friendly_name": "RPi Uptime"}}' http://hassio/homeassistant/api/states/sensor.system_uptime 2>/dev/null
   sleep 30;
 done
