@@ -1,5 +1,6 @@
 | Version | Change|
 | --- | --- |
+| **0.0.8** | using MemAvailable for memRawFree|
 | **0.0.7** | float calculation with awk|
 | **0.0.6** | debugging percentage as it stays at 0%|
 | **0.0.5** | using raw values for calculating percentage|

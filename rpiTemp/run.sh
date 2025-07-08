@@ -4,7 +4,8 @@ until false; do
   read cpuRawTemp</sys/class/thermal/thermal_zone0/temp #read instead of cat fpr process reductionread cpuRawTemp</sys/class/thermal/thermal_zone0/temp #read instead of cat fpr process reduction
   cpuTemp=$(( $cpuRawTemp / 1000 ))
   # 
-  memRawFree=$(cat /proc/meminfo | grep MemFree | awk '{ print $2 }')
+  # memRawFree=$(cat /proc/meminfo | grep MemFree | awk '{ print $2 }')
+  memRawFree=$(grep MemAvailable /proc/meminfo | awk '{ print $2 }')
   memRawTotal=$(cat /proc/meminfo | grep MemTotal | awk '{ print $2 }')
 
   memFree=$(( $memRawFree / 1000 ))
