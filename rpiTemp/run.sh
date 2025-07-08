@@ -10,7 +10,7 @@ until false; do
   memFree=$(( $memRawFree / 1000 ))
   memTotal=$(( $memRawTotal / 1000 ))
 
-  memFreePercent=$(( $memRawFree / $memRawTotal ))
+  memFreePercent=$(awk "BEGIN {printf \"%.2f\", ($memRawFree/$memRawTotal)*100}")
 
   #
   unit="C"
